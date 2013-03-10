@@ -198,7 +198,7 @@
       \end{center}
       \begin{tabular}{lr}
       Defense Committee: & \\
-      &  V.N. Venkatakrishnan \\
+      &  Lenore Zuck \\
       &  Stefano Zanero
       \end{tabular}
    \end{titlepage}}
