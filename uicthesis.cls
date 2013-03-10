@@ -199,7 +199,7 @@
       \begin{tabular}{lr}
       Defense Committee: & \\
       &  Lenore Zuck \\
-      &  Stefano Zanero
+      &  Stefano Zanero, Politecnico di Milano
       \end{tabular}
    \end{titlepage}}
 %    \end{macrocode}
