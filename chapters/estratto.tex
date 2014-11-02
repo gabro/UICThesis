@@ -1,0 +1,28 @@
+% !TEX root =  ../thesis.tex
+
+Nel corso degli ultimi anni, le applicazioni per dispositivi mobili hanno avuto una grandissima crescita, sia in quantità, sia in importanza nelle nostre vite quotidiane.
+Tale crescita sta segnando una vera e propria rivoluzione tecnologica, che porta ad importanti conseguenze nella vita di ciascuno di noi; mentre alcune di queste sono in buona parte positive e hanno l'effetto di semplificare e migliorare la vita degli utilizzatori di queste tecnologie, altre sono invece fonte di grandi preoccupazioni e introducono nuovi problemi da affrontare.
+
+Nello specifico, il grande aumento in termini di potenzialità e penetrazione dei dispositivi mobili li ha resi una componente centrale della vita di molte persone; tali dispositivi contengono spesso un'incredibile quantità di dati sensibili del loro utilizzatore: email, messaggi, contatti, numeri di conto e molto altro.
+
+Come, da chi e sotto quali circostanze queste informazioni possono essere accedute sono quindi domande che hanno assunto una fondamentale importanza.
+
+In questa tesi cerchiamo la risposta a tali domande, analizzando due aspetti delle applicazioni per dispositivi mobili:
+
+\begin{description}
+  \item[permessi di sistema] limitazioni tecniche imposte dai sistemi operativi per dispositivi mobili, volte a limitare e controllare l'accesso a risorse sensibili, come ad esempio fotocamera, sensore GPS, rubrica e simili.
+  \item[privacy policy] documenti legali che accompagnano le applicazioni per dispositivi mobili (e non) e che specificano - in linguaggio naturale - le modalità di trattamento dei dati personali, raccolti tramite l'applicazione.
+\end{description}
+
+Nello specifico, ci concentriamo sulle applicazioni per dispositivi Android, sistema operativo mobile sviluppato da Google.
+
+Proponiamo quindi uno strumento di analisi automatica per applicazioni Android, che permette di mettere in relazione i due aspetti sopracitati per estrarre potenziali incongruenze.
+Lo strumento, fruibile mediante applicazione web, permette di ricercare un'applicazione dal Play Store (lo store ufficiale di applicazioni Android) e di ottenere informazioni circa il suo livello di rispetto della privacy.
+
+Dopo l'introduzione, nel \autoref{chap:SOA} esponiamo il contesto in cui ci poniamo per parlare di privacy di applicazioni, proponendo una formalizzazione di tale contesto. Presentiamo dunque i meccanismi di tutela della privacy forniti dai moderni sistemi operativi mobili, evidenziandone criticità e punti deboli.
+
+Nel \autoref{chap:manual-analysis} presentiamo gli esperimenti preliminari che hanno permesso la realizzazione di uno strumento di analisi automatica, che coinvologono l'ispezione manuale di privacy policy e permessi Android.
+
+Il \autoref{chap:automated-analysis} espone l'approccio utilizzato per analizzare in maniera automatica diversi aspetti delle applicazioni Android, con lo scopo di estrarre informazione circa il rispetto della privacy degli utilizzatori di tali applicazioni.
+
+Il \autoref{chap:implem} è dedicato ai dettagli dell'implementazione espone le problematiche incontrate durante lo sviluppo dello strumento di analisi automatica seguite dalle soluzioni adottate. Nel \autoref{chap:results} esponiamo prima una metrica utilizzata per valutare il livello di affidabilità di un'applicazione, seguita dai risultati quantitativi derivanti dall'analisi di oltre 4000 applicazioni presenti sul Play Store. Seguono poi delle considerazioni qualitative sui risultati ottenuti. Le limitazioni e i possibili sviluppi dello strumenti di analisi automatica sono esposti nel \autoref{chap:conclusion}.

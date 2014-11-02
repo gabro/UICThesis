@@ -1,5 +1,7 @@
 % !TEX root =  ../thesis.tex
 
+\usepackage[top=43mm, bottom=44mm, left=41mm, right=32mm]{geometry}
+
 \def\chapterautorefname{Chapter}
 \def\sectionautorefname{Section}
 \def\subsectionautorefname{Section}
@@ -8,15 +10,17 @@
 \def\tableautorefname{Table}
 
 % Double spacing for text
-\linespread{2}
+\linespread{1.3}
 % No square brackets in bibliography
 \makeatletter
 \renewcommand\@biblabel[1]{#1.}
 \makeatother
 % Bibliography style
-\renewcommand\bibname{}
-\renewcommand{\bibsection}{\section*{}}
+% \renewcommand\bibname{}
+% \renewcommand{\bibsection}{\section*{}}
 % Single spacing list of abbreviations
-\renewcommand*{\glsgroupskip}{}
+% \renewcommand*{\glsgroupskip}{}
 % Hyperref fix
 \def\texorpdf #1#2{\texorpdfstring{#1{#2}}{#2}}
+
+\usepackage[Lenny]{fncychap}

@@ -1,32 +1,51 @@
-% UIC Thesis Template by
-% Michele Spagnuolo - http://michele.spagnuolo.me
-% Feb 2013
+\documentclass[a4paper,12pt,twoside,final]{book}
 
-\documentclass[letterpaper,11pt,oneside,final]{uicthesis}
+\usepackage[top=43mm, bottom=44mm, left=41mm, right=32mm]{geometry}
+
+\usepackage[toc,page]{appendix}
+\usepackage[utf8]{inputenc}
 \usepackage{amsfonts, amsmath, amsthm, amssymb, epsfig, graphicx, float}
-\usepackage[longnamesfirst,square,sort&compress, comma, super]{natbib}
-\usepackage[xindy,style=index]{glossaries}
-\usepackage{bera}
-\usepackage{lipsum}\usepackage{lipsum}
+% \usepackage[longnamesfirst,square,sort&compress, comma, super]{natbib}
+% \usepackage[xindy,style=index]{glossaries}
+\usepackage{palatino}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage[disable]{todonotes}
+\usepackage{listings}
+\usepackage{setspace}
+
+\definecolor{grey}{rgb}{0.9,0.9,0.9}
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+
+\newcommand*\justify{%
+  \fontdimen2\font=0.4em% interword space
+  \fontdimen3\font=0.2em% interword stretch
+  \fontdimen4\font=0.1em% interword shrink
+  \fontdimen7\font=0.1em% extra space
+  \hyphenchar\font=`\-% allowing hyphenation
+}
 
 % Configuration
 	% Thesis title
-	\newcommand{\thesisTitle}{Thesis Title}
+	\newcommand{\thesisTitle}{Analyzing Privacy of Android Apps}
 	% Thesis author
-	\newcommand{\thesisAuthor}{Gabriele Petronella}
+	\newcommand{\thesisAuthor}{GABRIELE PETRONELLA}
 	% Author's previous degrees
-	\newcommand{\authorDegrees}{B.S., Politecnico di Milano, July 2011}
+	\newcommand{\authorDegrees}{B.S., Politecnico di Milano, Milan, Italy, July 2011}
 	% Current degree (Thesis's degree)
 	\newcommand{\thesisDegree}{Master of Science in Computer Science}
 
-\usepackage[unicode,
+\PassOptionsToPackage{hyphens}{url}\usepackage[unicode,
 			pdftex,
 			plainpages=false,
 			linktoc=all,
 			hyperindex,
 			breaklinks=true,
 			citecolor=green,
-			urlcolor=blue
+			urlcolor=blue,
+			hidelinks
 		   ]{hyperref}
 \hypersetup{
 	pdftitle={\thesisTitle},
@@ -37,64 +56,130 @@
 \input{style/style}
 
 % Acronyms (to appear in the List of Abbreviations)
-\makeglossaries
-\input{acronyms/acronyms}
+% \makeglossaries
+% \input{acronyms/acronyms}
 
 \begin{document}
-	\title{\huge{\thesisTitle}}
-	\author{\thesisAuthor}
-	\pdegrees{\authorDegrees}
-	\degree{\thesisDegree}
-	\maketitle
+	\begin{titlepage}
+	\topskip0pt
+	\vspace*{\fill}
+	\begin{spacing}{1.5}
+	\begin{center}
 
-	\dedication
+		\includegraphics[width=3cm]{images/logo-polimi.png}
+		
+		Politecnico di Milano
+
+		\textit{Dipartimento di Elettronica, Informazione e Bioingegneria}
+
+		\vspace{0.2cm}
+
+		{LAUREA MAGISTRALE IN INGEGNERIA INFORMATICA}
+
+		\noindent\rule{10cm}{0.4pt}
+		
+		\vspace{0.5cm}
+
+		{\Large \thesisTitle}
+		
+	\end{center}
+	\vspace{1.5cm}
+	\begin{flushright}
+		Thesis of:
+
+		\textbf{Gabriele Petronella}
+
+		\vspace{0.5cm}
+
+		Matricola:
+
+		\textbf{783759}
+	\end{flushright}
+	\begin{flushleft}
+		Advisor (Politecnico di Milano):
+
+		\textbf{Prof. Stefano Zanero}
+
+		\vspace{0.5cm}
+
+		Advisor (University of Illinois at Chicago):
+		
+		\textbf{Prof. Lenore D. Zuck}
+	\end{flushleft}
+
+	\vspace{0.7cm}
+
+	\begin{center}
+		{\footnotesize\fontfamily{pbk}\selectfont A.A. 2012 - 2013}
+	\end{center}
+
+	\end{spacing}
+	\vspace*{\fill}
+	\end{titlepage}
+
+	\chapter*{}
 		\input{dedication/dedication}
 
-	\acknowledgements
+	\chapter*{Acknowledgements}
 		\input{acknowledgements/acknowledgements}
 
 	% Optional Preface
 	% \preface \label{preface}
 	%	Blah
 	
+	\chapter*{Summary}
+	\label{summary}
+	In this thesis we present the design and the implementation of a tool to analyze privacy policies of Android applications, with the purpose of increasing the user's awareness about privacy-related concerns.
+	The goal of this work is to produces a tool, targeted to users who wish to evaluate the compliance of arbitrary Android applications to their own privacy policies.
+	The tool implements a semantic analyzer of privacy policies, able to extract relevant sentences from them and put them in relationship with the corresponding privacy-related permissions requested by applications.
+	This work was inspired by the manual review of privacy policies of Android applications, and noticing how a common informal structure was evident across multiple documents.
+
+	\chapter*{Ampio estratto}
+	\label{chap:estratto}
+	\input{chapters/estratto}
+
 	\tableofcontents
 	\listoftables
 	\listoffigures
 	% Remember to run makeglossaries thesis
-		\glsaddall
-		\printglossary[title=LIST OF ABBREVIATIONS]
+		% \glsaddall
+		% \printglossary[title=LIST OF ABBREVIATIONS]
 
-	\summary \label{summary}
-		Summary\ldots
-
-	\chapter{Introduction} \label{chap:intro}
+	\chapter{Introduction}
+		\label{chap:intro}
 		\input{chapters/intro}
-	\chapter{State of the Art} \label{chap:SOA}
+	\chapter{State of the Art}
+		\label{chap:SOA}
 		\input{chapters/soa}
-	\chapter{Proposed Approach} \label{chap:approach}
-		\input{chapters/approach}
-	\chapter{Proposed Implementation} \label{chap:implem}
+	\chapter{Preliminary Experiments}
+		\label{chap:manual-analysis}
+		\input{chapters/manual-analysis}
+	\chapter{Automated analysis}
+		\label{chap:automated-analysis}
+		\input{chapters/automated-analysis}
+	\chapter{Implementation}
+		\label{chap:implem}
 		\input{chapters/implementation}
-	\chapter{Experimental Results} \label{chap:results}
+	\chapter{Experimental Results}
+		\label{chap:results}
 		\input{chapters/results}
-	\chapter{Conclusions} \label{chap:conclusion}
+	\chapter{Conclusions and Future Work}
+		\label{chap:conclusion}
 		\input{chapters/conclusion}
 
-	\clearpage
-	\phantomsection
-	\appendices
-		\appendix \label{app:a}
-		\input{appendices/appa}
+	% \begin{appendices}
+	% 	\chapter{Lookup tables}
+	% 	\label{app:a}
+	% 	\input{appendices/appa}
+	% \end{appendices}
 
 	\clearpage
 	\phantomsection
-	\bib
+	\bibliographystyle{plain}
 	\bibliography{thesis}
 	\nocite{*}
 
-	\newpage
-	\phantomsection
-
-	\input{vita/vita}
-		\ldots
+	% \newpage
+	% \phantomsection
+	% \input{vita/vita}
 \end{document}

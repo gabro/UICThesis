@@ -1,30 +1,27 @@
 % !TEX root =  ../thesis.tex
 
-Intro
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+During the last few years, mobile applications constantly grew in both number and importance in our everyday life. 
 
-\section{Intro1} \label{sec:intro1}
-	Citation example (see backref in cited literature) \cite{Love-2010-LKD}
-	Table example (see \autoref{tab:ex})
-	\begin{table}[ht]
-		\caption[EXAMPLE TABLE 1]{SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE SAMPLE TABLE}\label{tab:ex}
-		\centering
-		\begin{tabular}{|c|c|}\hline
-			one		& two\\\hline
-			three	& four\\\hline
-		\end{tabular}
-	\end{table}
-	
-	\lipsum
-		Citation	\autoref{tab:ex2} \\ \\
-	\lipsum
-	
-	\begin{table}[ht]
-		\caption{EXAMPLE TABLE 2}\label{tab:ex2}
-		\centering
-		\begin{tabular}{|c|c|}\hline
-			one		& two\\\hline
-			three	& four\\\hline
-		\end{tabular}
-	\end{table}
+% \todo[inline]{Statistical data about mobile applications and device owners}
 
-	\lipsum
+Such an impressive growth is marking a technology revolution, and, as many revolutions, it carries huge consequences affecting everyone's life. Some of these consequences lead to clear improvements, whereas others put under the spotlight some concerns that were not that relevant just a few years ago.
+
+The increase in penetration and capabilities of mobile devices has turned them in something most people would find hard to separate from. Mobile devices nowadays typically hold a huge amount of information about their owners: email, messages, contacts, bank accounts, social network profiles, location information.
+
+% \todo[inline]{Third-party applications}
+
+How and under which circumstances such information can be disclosed has quickly become a concern.
+
+
+This thesis work focuses on the first two steps discussed in the previous section.
+
+The first step requires an in-depth analysis and comprehension of the most requested permissions, in order to identify the potential privacy concerns each one of them carries.
+
+Once the permissions of interest have been identified we then perform a manual analysis in order to understand how privacy policies deal with the privacy concerns represented by them. The manual analysis will enable an automated process, which, given an arbitrary Android application published on the Play Store platform, retrieves its privacy policy and produces a human-readable report about the relationships between the permissions list and the analyzed legal document.
+
+The final result will then allow a potential user to aggregate a large amount of privacy-related information in a quick and concise way, marking a clear step towards privacy awareness.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The remainder of this thesis is organized as follows. Chapter 2 presents the manual analysis performed over privacy policies and permissions. Chapter 3 then describes the automatic analysis of Android apps, enabled by the results of Chapter 2. Chapter 4 presents the details of the implementation and of the tools used to support both manual and automated analysis. Chapter 5 presents a metric used for evaluating the compliance of Android applications w.r.t. their privacy policies, as well as quantitative results - measured with such metric - and qualitative results. Chapter 6 concludes this thesis, proposing possible further developments to the work done.

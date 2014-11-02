@@ -1,4 +1,21 @@
 % !TEX root =  ../thesis.tex
-Conclusion
 
-\section{Concl1} \label{sec:concl1}
+We presented a novel approach to the analysis of privacy policies in the context of Android applications. We introduced a framework for reasoning and proving properties of privacy policies, laying down the foundation for a new area of investigation.
+
+The tool we implemented greatly eases the process of understanding the privacy implications of installing third party apps and it has already been proven able to highlight worrisome instances of applications.
+
+The tool is developed with expandability in mind, and further developments in the approach can easily be integrated in order to increase the reliability and effectiveness.
+
+This thesis aims at laying the foundation for a new area of investigation, namely the relationship between mobile applications capabilities and behaviors and their privacy policies. As we mentioned in \autoref{chap:intro} several steps can be taken towards user awareness about privacy matters and this work covers the first necessary ones: identifying and analyzing the privacy-relevant permissions and examining their relationships with the privacy policies language. This enables further steps in the investigation and we now outline some of them.
+
+As anticipated in \autoref{chap:intro}, the first natural steps following the present work would be to live monitor the application's behavior. A static analysis can provide useful information about the \emph{potential} behaviors that can occur, but only a dynamic observation of applications running on real device can give insights about the \emph{actual} behaviors.
+
+The first implementation one can think of is a passive monitoring of applications, with the final purpose of reporting such behaviors and further refine the ``goodness'' score presented in \autoref{sec:metric}.
+
+One can also think of taking a step further and turn the monitoring into an active defense: if the application is found performing a behavior clearly in contrast with its privacy policy, the monitoring tool can immediately inform the user or even prevent such behavior from happening.
+
+As discussed in \autoref{sec:false-positives}, the proposed approachoccasionally incurs in false positives and we illustrated a possible solution to this issue based on verb detection.
+
+As anticipated, another viable solution is to allow the users of the tool to provide feedback on each sentence. They could either mark the sentence as \emph{relevant} or \emph{not relevant} and therefore improve the scoring of an application.
+
+The same approach could then be used to identify false negatives: relevant sentences can be not recognized and a user can signal such fact indicating which relevant portions of the privacy policy apply to the selected permission.

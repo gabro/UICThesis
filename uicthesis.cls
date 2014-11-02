@@ -85,7 +85,8 @@
 \DeclareOption{final}{\renewcommand\@draftmark{0}}
 \DeclareOption{letterpaper}{\setlength{\paperheight}{11in}
                             \setlength{\paperwidth}{8.5in}}
-
+\DeclareOption{letterpaper}{\setlength{\paperheight}{11in}
+                            \setlength{\paperwidth}{8.5in}}
 \ExecuteOptions{letterpaper,11pt,oneside,final} % default options
 
 %
@@ -172,7 +173,7 @@
       \c@page=2
       \vbox to 0pt{%
          \begin{center}
-            \large\transparentbold\@title
+            \small\transparentbold\@title
          \end{center}\vss}
       \vfill
       \begin{center}
@@ -196,11 +197,14 @@
             \end{center}}
       \end{singlespace}
       \end{center}
-      \begin{tabular}{lr}
-      Defense Committee: & \\
-      &  Lenore Zuck \\
-      &  Stefano Zanero, Politecnico di Milano
+      \begin{singlespace}
+      \begin{tabular}{l}
+      Defense Committee: \\
+      Lenore Zuck, Chair of Advisor \\
+      Robert H. Sloan \\
+      Stefano Zanero, Politecnico di Milano
       \end{tabular}
+      \end{singlespace}
    \end{titlepage}}
 %    \end{macrocode}
 %

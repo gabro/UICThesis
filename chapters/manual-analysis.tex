@@ -1,0 +1,338 @@
+% !TEX root =  ../thesis.tex
+
+\section{Overview}
+\label{sec:overview}
+In this chapter we will present the preliminary experiments we carried out, which involve the manual analysis of privacy policies and Android permission.
+As we will see, this stage lays the foundation to a more sophisticated analysis, presented in \autoref{chap:automated-analysis}.
+
+At the end of the chapter we will also anticipate some of the issues arising from this approach, as well as proposing possible workarounds.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Manual analysis}
+In this section we present the preliminary manual steps that needed to be executed in order to enable an automated analysis.
+
+\subsection{Permissions of Interest}
+The first step in our research is to identify which of the permissions that an app can request have privacy related consequences.
+
+Firstly, we are interested into discovering which are the most requested permissions in our domain of interest.
+There are no official data released by Google, however we were able to retrieve empirical data with the use of
+unofficial APIs \cite{play-store-unofficial-api}, discussed in greater details in \autoref{chap:implem}.
+
+The Play Store platform divides apps in categories (such as \emph{Games}, \emph{Education}, \emph{Tools} and so on). We ran
+an analysis on the most downloaded free apps for each category (a total of 4300 applications);
+we retrieved the permission list for each one and aggregated the data. The top 20 requested permissions are shown in \autoref{tab:top20-permissions}.
+
+\begin{table}[ht]
+    \caption{TOP 20 REQUESTED PERMISSIONS IN FREE APPS}
+    \label{tab:top20-permissions}
+    \centering
+    \begin{tabular}{clc}
+        \toprule
+            \#   & Permission & \% apps using it \\
+            \midrule
+                1  & INTERNET                       &   99.35\% \\
+                2  & ACCESS\_NETWORK\_STATE         &   98.35\% \\
+                3  & READ\_EXTERNAL\_STORAGE        &   92.35\% \\
+                4  & WRITE\_EXTERNAL\_STORAGE       &   92.35\% \\
+                5  & ACCESS\_WIFI\_STATE            &   85.47\% \\
+                6  & READ\_PHONE\_STATE             &   78.39\% \\
+                7  & WAKE\_LOCK                     &   59.65\% \\
+                8  & VIBRATE                        &   32.79\% \\
+                9  & GET\_ACCOUNTS                  &   32.79\% \\
+                10 & ACCESS\_COARSE\_LOCATION       &   19.86\% \\
+                11 & GET\_TASKS                     &   14.86\% \\
+                12 & RECEIVE\_BOOT\_COMPLETED       &   13.88\% \\
+                13 & ACCESS\_FINE\_LOCATION         &   9.93\%  \\
+                14 & READ\_LOGS                     &   9.88\%  \\
+                15 & MOUNT\_UNMOUNT\_FILESYSTEMS    &   6.93\%  \\
+                16 & RECORD\_AUDIO                  &   5.95\%  \\
+                17 & CHANGE\_WIFI\_STATE            &   4.98\%  \\
+                18 & DISABLE\_KEYGUARD              &   4.95\%  \\
+                19 & READ\_CONTACTS                 &   3.00\%  \\
+                20 & WRITE\_SETTINGS                &   2.98\%  \\
+        \midrule
+            \multicolumn{3}{c}{\footnotesize \emph{Generated from 4300 apps on Nov 17, 2013}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The general list of permissions, however, includes permissions with no significant impact on privacy. We manually reviewed it to identify which permissions affect the user's privacy and how, obtaining a list of all of the permissions which enable actions that raises privacy concerns. For each permission, a list of enabled actions is provided, along with a discussion about the privacy concerns.
+
+\begin{description}
+    \item[INTERNET] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                     \item send data over the Internet
+                     \item receive data over the Internet
+                 \end{itemize} 
+             \item[Privacy concerns]
+                This permission is the most requested and also the most dangerous, privacy-wise, as it enables communication with remote servers over the Internet.
+                Used in combination with other permissions, it allows the application to send any retrieved data to an arbitrary remote server.
+             \item[Examples]
+                An application can send any sensitive data retrieved thanks to other permissions over the Internet. For instance one can think of an application reading the user's phone number and sending it to a remote server, perhaps with the purpose of targeted phone advertisement.
+                As described in a recent study \cite{stickley}, this permission can be dangerous by itself: a malicious application could collect sensitive data from the user (for example, a fake email client asking for username and password) and send them 
+         \end{description} 
+   
+   \item[READ\_EXTERNAL\_STORAGE] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                     \item read files on the external SD card
+                 \end{itemize} 
+             \item[Privacy concerns]
+                This permission allows to read files on an external SD card, so that anything stored in the external memory can be accessed by the app, including pictures, videos and data stored by other applications.
+             \item[Examples]
+                An application can retrieve all of the user's pictures stored on the SD card and send them to a remote server, violating the user's privacy.
+         \end{description} 
+    
+    \item[WRITE\_EXTERNAL\_STORAGE] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item write files on the external SD card
+                    \item read files on the external SD card
+                 \end{itemize} 
+             \item[Privacy concerns]
+                Despite the name, this permission implicitly enables also \\ \texttt{READ\_EXTERNAL\_STORAGE}, so the same privacy concerns apply.
+         \end{description} 
+
+    \item[ACCESS\_WIFI\_STATE] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item access the \texttt{WifiManager}
+                 \end{itemize} 
+             \item[Privacy concerns]
+                Accessing the \texttt{WifiManager} allows the app to read information about the WiFi network the device is connected to, including the current IP address.
+             \item[Examples]
+                A malicious application can track the user's location by estimating the WiFi network's location, as recent studies demonstrate \cite{Yang:2008:ELU:1339822.1339967}
+         \end{description} 
+
+    \item[READ\_PHONE\_STATE] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item detect in-progress phone calls
+                    \item read IMEI and IMSI identifiers
+                    \item read the network provider information
+                    \item read the user's phone number
+                 \end{itemize} 
+             \item[Privacy concerns]
+                This is one of the most controversial permissions. While most applications request this permission in order to detect incoming phone calls, which is usually a legitimate use, it can also be used to retrieve sensitive information such as the user's own phone number.
+             \item[Examples]
+                An application can steal the user's phone number and sell it to advertisement companies for profit.
+
+         \end{description} 
+
+    \item[GET\_ACCOUNTS] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item read the list of accounts from the Accounts Service
+                 \end{itemize} 
+             \item[Privacy concerns]
+                The list of accounts consists of a list of usernames for each account associated with the device. For instance, the application might retrieve the email address associated with the user's GMail account.
+             \item[Examples]
+                Retrieving account's usernames can be the first step towards identity stealing. A malicious application can use this piece of information to break into a user's email account and access personal data.
+         \end{description} 
+
+    \item[ACCESS\_COARSE\_LOCATION] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item know the (coarse) device location
+                 \end{itemize} 
+             \item[Privacy concerns]
+                The coarse location is determined by the triangulation of GSM tower cells information and WiFi information. Although coarse, it can determine a user's location with a good level of accuracy, therefore representing a privacy concern.                
+         \end{description}
+
+    \item[GET\_TASKS] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item know which tasks are running or recently run
+                 \end{itemize} 
+             \item[Privacy concerns]
+                Allows an application to get information about the currently or recently running tasks. While not dangerous by itself, it can help in stealing information when combined with other permissions.
+         \end{description} 
+
+    \item[ACCESS\_FINE\_LOCATION] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item know the (fine) device location
+                 \end{itemize} 
+             \item[Privacy concerns]
+                The same concerns as coarse location apply.
+         \end{description} 
+
+    \item[READ\_LOGS] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item read the low-level system log files
+                 \end{itemize} 
+             \item[Privacy concerns]
+                Not particularly worrying by itself, but it enables the app to read everything other applications might have logged. If some application logs sensitive data, this permission will allow them to be read.
+         \end{description} 
+
+    \item[RECORD\_AUDIO] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item record audio
+                 \end{itemize} 
+             \item[Privacy concerns]
+                While this permission has legitimate uses, such as note taking or voice search, it is a potential tool for eavesdropping and recording sensible information. 
+         \end{description}   
+
+    \item[READ\_CONTACTS] \hfill
+        \begin{description}
+             \item[Actions enabled] \hfill
+                \begin{itemize}
+                    \item read the user's contacts data.
+                 \end{itemize} 
+             \item[Privacy concerns]
+                The whole user's address book can be read. 
+         \end{description}  
+
+\end{description}
+
+Table \autoref{tab:top-privacy-related-permissions} summarizes the privacy-related permissions we will consider in our analysis.
+
+\begin{table}[ht]
+    \caption{TOP PRIVACY-RELATED PERMISSIONS IN FREE APPS}
+    \label{tab:top-privacy-related-permissions}
+    \centering
+    \begin{tabular}{clc}
+        \toprule
+            \#   & Permission & \% apps using it \\
+            \midrule
+                1  & INTERNET                       &   99.35\% \\
+                2  & READ\_EXTERNAL\_STORAGE        &   92.35\% \\
+                3  & WRITE\_EXTERNAL\_STORAGE       &   92.35\% \\
+                4  & ACCESS\_WIFI\_STATE            &   85.47\% \\
+                5  & READ\_PHONE\_STATE             &   78.39\% \\
+                6  & GET\_ACCOUNTS                  &   32.79\% \\
+                7  & ACCESS\_COARSE\_LOCATION       &   19.86\% \\
+                8  & GET\_TASKS                     &   14.86\% \\
+                9  & ACCESS\_FINE\_LOCATION         &   9.93\%  \\
+                10 & READ\_LOGS                     &   9.88\%  \\
+                11 & RECORD\_AUDIO                  &   5.95\%  \\
+                12 & READ\_CONTACTS                 &   3.00\%  \\
+        \midrule
+            \multicolumn{3}{c}{\footnotesize \emph{Generated from 4300 apps on Nov 17, 2013}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Relationship with privacy policy}
+Now that we identified the permissions we are interested in, we want to see how each permission relates to the privacy policy, i.e. in which terms the privacy policy deals with permissions the app requested.
+
+Our analysis involved an initial corpus of twenty policies. For each permission we went through each privacy policy of the corpus, manually extracting common pattern and terms.
+
+The result of this manual investigation is a lookup table associating each permission with a list of common words or expressions used in the privacy policies to refer to the actions enabled by it.
+
+\subsection{Example: Rovio's Privacy Policy}
+We now illustrate what expressed in the previous section, taking a popular app's privacy policy as an example. The application in question is \emph{Angry Birds} by Rovio Entertainment Ltd. If we take the \texttt{ACCESS\_COARSE\_LOCATION} permission into consideration, we can find several parts of the privacy policy referring to it. Once such parts have been identified, the relevant words and expressions concerning the specific matter can be extracted. What follow are the relevant sections of Rovio's privacy policy concerning the user's location matter\cite{rovio}:
+
+\begin{quote}
+\emph{``Rovio or third parties operating the ad serving technology may use demographic and \textbf{geo-location} information (for more information regarding use of Location Data see below Section 3) as well as information logged from your hardware or device to ensure that relevant advertising is presented within the Service.''}
+\end{quote}
+
+\begin{quote}
+\emph{``To the extent Rovio makes \textbf{location} enabled Services available and you use such Services, Rovio may collect and process your \textbf{\textbf{location}} data to provide \textbf{location} related Services and advertisements.''}
+\end{quote}
+
+\begin{quote}
+\emph{``The \textbf{location} data is processed and stored only for the duration that is required for the provision of the \textbf{location} related Services.''}
+\end{quote}
+
+\begin{quote}
+\emph{``Rovio may use, depending on the service (1)IP-based \textbf{location} based on the IP address presented by the end-user, (2) fine \textbf{geo-location} data based on coordinates obtained from a mobile device's \textbf{GPS} radio, or (3) coarse, network-based \textbf{geo-location} data based on proximity of network towers or the \textbf{location} of WiFi networks.''}
+\end{quote}
+
+\begin{quote}
+\emph{``Your fine, \textbf{GPS-based} \textbf{geo-location} is not accessed without your consent.''}
+\end{quote}
+
+\begin{quote}
+\emph{``Notwithstanding Rovio's partners who are providing location related parts of the Service, Rovio will not share your GPS geo-location with third parties without your consent.''}
+\end{quote}
+
+\begin{quote}
+\emph{``To the extent Rovio makes available GPS geo-location to third parties in accordance with this Privacy Policy, it will be provided anonymously.''}
+\end{quote}
+
+\begin{quote}
+\emph{``This includes, for example, collection of IP-based geolocation data to ensure that the product, service or features served comply with applicable laws of that nation.''}
+\end{quote}
+
+All of the above sentences are relevant to the matter of establishing what is the app expected behavior with respect to the user's location information. It is particularly interesting to observe a few characteristics of some of the cited sentences. Specifically Rovio's privacy policy states
+
+\emph{``Your fine, \textbf{GPS-based} \textbf{geo-location} is not accessed without your consent.''}
+
+This provides a false sense of assurance, since in Android application the consent has already been given at installation time, so the geo-location can always be accessed by the application without further notice to the user.
+
+\subsection{Example: Halfbrick's Privacy Policy}
+Similar examples can be found in many popular apps. Let us for instance consider the case of Halfbrick, a company most known for a game called Fruit Ninja. In the app's privacy policy we find
+
+\emph{``Where you allow us access to such information, we may also collect information from your device such as your geographic location''}\cite{halfbrick}
+
+Again, we can see how similar matters are mentioned similarly in different privacy policies, and also how again such a sentence provides false assurance: Android apps always have permissions granted upfront, so the phrase \emph{``Whenever you allow us''}, realistically means \emph{``Whenever the app is installed''} on an Android device.
+
+\subsection{Lookup table example}
+Based on this manual analysis, we built a look up table of permissions and the way they are referred to in policies. \autoref{tab:lookup-coarse-location} and \autoref{tab:lookup-record-audio} show examples of lookup table entries.
+
+\begin{table}[tbh]
+    \caption{ACCESS\_COARSE\_LOCATION LOOKUP TABLE}
+    \label{tab:lookup-coarse-location}
+    \centering
+    \begin{tabular}{lp{6cm}}
+        \toprule
+            Permission   & Keywords \\
+            \midrule
+                \texttt{ACCESS\_COARSE\_LOCATION}  & \emph{``gps''}, \emph{``IP based location''}, \emph{``location''}, \emph{``location services''}, \emph{``geo-location''}, \emph{``geographic location''} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[tbh]
+    \caption{RECORD\_AUDIO LOOKUP TABLE}
+    \label{tab:lookup-record-audio}
+    \centering
+    \begin{tabular}{lp{9cm}}
+        \toprule
+            Permission   & Keywords \\
+            \midrule
+                \texttt{RECORD\_AUDIO}  & \emph{``microphone''}, \emph{``record audio''}, \emph{``record voice''}, \emph{``audio''} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{False positives}
+\label{sec:false-positives}
+Clearly, the main challenge of the approach we just described is reliably mapping privacy policies to permissions.
+Due to the complexity of such challenge, the methodology occasionally suffers from false positives. For example, if we consider the sentence:
+
+\emph{Merchandise can only be shipped to approved U.S. shipping locations.}
+
+taken from the privacy policy of Shopkick (a popular shopping reward application, later discussed in \autoref{chap:results}), it is immediately evident to a human reader that, in this context, the word ``location'' does not refer to the collection of the user's location.
+Most importantly, the sentence is not related with privacy matters at all and it should therefore not included in our mapping.
+
+A few different approaches are possible in order to face the false positive issue.
+
+A first possibility would be crowd-sourced human correction of tool results and improved NLP analysis of the text.
+However, this would require a critical mass of users in order to produce significant results, thus we focused on an improved NLP analysis, which is likely to produce a more immediate impact.
+
+From a technical point of view, ambiguities arise by the different meanings a word can have in different contexts. The intuition is to take the context into consideration, and widen the spectrum of our analysis.
+
+Precisely examining the linguistic meaning of a sentence is a very hard task, arguably impossible in some instances. However, we can again take advantage of the particular domain we are looking at and consider the particular sentence structure typical of privacy policies.
+Most sentence in the policies share a simple and straightforward structure that we can analyze more easily.
+
+Instead of taking the whole linguistic structure into account, which would require an overly-complex NLP approach, we shift our attention to verbs only. The intuition behind this choice is that we can disambiguate the meaning of the terms we are looking for by considering the verbs that appear in the same sentences.
+
+For example, ``location'' is ambiguous in the above sentence because of its double meaning of ``GPS location'' and ``physical location'', but we can easily disambiguate by looking for a derivation of the ``ship'' verb in the sentence, whose presence is likely to mark a false positive.
+
+Similarly to what we have done with the lookup table, in this manual analysis step we then produce a ``false positive table'' for each permission, which we will then use during the automated analysis in order to exclude as many false positives as possible.
