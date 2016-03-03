@@ -1,0 +1,79 @@
+graph {
+70201547373660 [label="Document\n\"shopkick | privacy [...] \n 9, 2013\"\n\nfile:  \"/Users/gabro/.rvm/gems/ruby-1.9.3-p448/gems/treat-2.0.7/files//privacy-and-tos.html\"\nformat:  \"html\"\nimages: \n[  ]\nurl:  \"http://shopkick.com/privacy-and-tos\"",color=""]
+70201526542940 [label="Section\n\"shopkick | privacy [...] \n 9, 2013\"\n\nlevel:  \"1\"\nformat:  \"txt\"",color=""]
+70201547373660 -- 70201526542940;
+70201526541240 [label="Title\n\"shopkick | privacy [...] \n of use\"",color=""]
+70201526542940 -- 70201526541240;
+70201527259000 [label="Phrase\n\"shopkick | privacy [...] \n of use\"",color=""]
+70201526541240 -- 70201527259000;
+70201526407260 [label="Title\n\"SHOPKICK™ PROGRAM TERMS [...] \n OF SERVICE\"",color=""]
+70201526542940 -- 70201526407260;
+70201527282160 [label="Phrase\n\"SHOPKICK™ PROGRAM TERMS [...] \n OF SERVICE\"",color=""]
+70201526407260 -- 70201527282160;
+70201526592300 [label="Section\n\"This is an [...] \n this Agreement.\"\n",color=""]
+70201526542940 -- 70201526592300;
+70201526611280 [label="Title\n\"License\"",color=""]
+70201526542940 -- 70201526611280;
+70201527309420 [label="Phrase\n\"License\"",color=""]
+70201526611280 -- 70201527309420;
+70201526791680 [label="Section\n\"Subject to your [...] \n its licensors.\"\n",color=""]
+70201526542940 -- 70201526791680;
+70201526796720 [label="Title\n\"Messaging\"",color=""]
+70201526542940 -- 70201526796720;
+70201527337480 [label="Phrase\n\"Messaging\"",color=""]
+70201526796720 -- 70201527337480;
+70201526816220 [label="Section\n\"As part of [...] \n wireless carrier.\"\n",color=""]
+70201526542940 -- 70201526816220;
+70201526834900 [label="Title\n\"Registration\"",color=""]
+70201526542940 -- 70201526834900;
+70201527372780 [label="Phrase\n\"Registration\"",color=""]
+70201526834900 -- 70201527372780;
+70201526843380 [label="Section\n\"In order to [...] \n the Services.\"\n",color=""]
+70201526542940 -- 70201526843380;
+70201526851960 [label="Title\n\"Earning kicks™, Bonuses [...] \n Other Awards\"",color=""]
+70201526542940 -- 70201526851960;
+70201525750600 [label="Phrase\n\"Earning kicks™, Bonuses [...] \n Other Awards\"",color=""]
+70201526851960 -- 70201525750600;
+70201527075720 [label="Section\n\"You may earn [...] \n (collectively, “Bonuses”).\"\n",color=""]
+70201526542940 -- 70201527075720;
+70201527068280 [label="Section\n\"Automatic Expiration: Unless [...] \n Application .\"\n",color=""]
+70201526542940 -- 70201527068280;
+70201527090920 [label="Section\n\"shopkick reserves the [...] \n any time.\"\n",color=""]
+70201526542940 -- 70201527090920;
+70201527098700 [label="Section\n\"If you believe [...] \n such event.\"\n",color=""]
+70201526542940 -- 70201527098700;
+70201527107440 [label="Paragraph\n\"Redeeming kicks, Bonuses [...] \n for Rewards\"",color=""]
+70201526542940 -- 70201527107440;
+70201526113460 [label="Phrase\n\"Redeeming kicks, Bonuses [...] \n for Rewards\"",color=""]
+70201527107440 -- 70201526113460;
+70201527115180 [label="Section\n\"You may redeem [...] \n may have.\"\n",color=""]
+70201526542940 -- 70201527115180;
+70201527122480 [label="Section\n\"kicks can be [...] \n manufacturer’s updates.\"\n",color=""]
+70201526542940 -- 70201527122480;
+70201527166480 [label="Section\n\"Merchandise rewards that [...] \n or non-infringement.\"\n",color=""]
+70201526542940 -- 70201527166480;
+70201527141060 [label="Paragraph\n\"Forfeiture of kicks [...] \n Account Termination/Cancellation\"",color=""]
+70201526542940 -- 70201527141060;
+70201529905060 [label="Phrase\n\"Forfeiture of kicks [...] \n Account Termination/Cancellation\"",color=""]
+70201527141060 -- 70201529905060;
+70201527147660 [label="Section\n\"We may deem [...] \n future programs.\"\n",color=""]
+70201526542940 -- 70201527147660;
+70201527156080 [label="Title\n\"Privacy\"",color=""]
+70201526542940 -- 70201527156080;
+70201530262400 [label="Phrase\n\"Privacy\"",color=""]
+70201527156080 -- 70201530262400;
+70201527193940 [label="Section\n\"Our goal is [...] \n from receiving.\"\n",color=""]
+70201526542940 -- 70201527193940;
+70201527198840 [label="Title\n\"Kicks When You Buy\"",color=""]
+70201526542940 -- 70201527198840;
+70201530303480 [label="Phrase\n\"Kicks When You Buy\"",color=""]
+70201527198840 -- 70201530303480;
+70201527207220 [label="Section\n\"Our Kicks When [...] \n link http://app.shopkick.com/shopkick/v1/user/show_email_unsubscribe.\"\n",color=""]
+70201526542940 -- 70201527207220;
+70201527230940 [label="Section\n\"We hope you [...] \n using shopkick.\"\n",color=""]
+70201526542940 -- 70201527230940;
+70201527236640 [label="Title\n\"Last Updated: September [...] \n 9, 2013\"",color=""]
+70201526542940 -- 70201527236640;
+70201530367300 [label="Phrase\n\"Last Updated: September [...] \n 9, 2013\"",color=""]
+70201527236640 -- 70201530367300;
+}

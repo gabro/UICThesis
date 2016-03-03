@@ -1,0 +1,5 @@
+gem 'slim'
+gem 'sinatra'
+gem 'sinatra-twitter-bootstrap'
+gem 'json'
+gem 'mechanize'

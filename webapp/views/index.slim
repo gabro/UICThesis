@@ -1,0 +1,117 @@
+#search.row.span4.offset4.spacer
+  .col-md-12 
+    form.navbar-search id="search-form"
+      input.search-query id="search-box" type="search" name="title" placeholder="Search Play Store for apps..."
+      input id="package-name" type="hidden" name="package"
+      input.btn id="search-submit" type="submit" disabled='true'
+
+#permissions.row
+  .span3.offset1.spacer
+    table.table-striped id="permissions-table"
+  .span8.spacer
+    h3#permission-title
+    em
+      p#permission-description
+    table.table-striped id="sentences-table"
+    .loader
+      .loader-image
+      | crunching data...
+
+#privacy.row.span12.spacer
+  .col-md-1
+    iframe id="privacy-frame" frameborder="0" hidden=true
+
+javascript:
+  $( document ).ready(function() {
+    hideLoader();
+  });
+
+  $("#search-box").autocomplete({
+    source: function (request, response) {
+        $("#search-submit").attr('disabled', true);
+      $.ajax({
+        url: "/playstore-search-autocomplete",
+        data: { term: request.term },
+        dataType: "json",
+        type: "POST",
+        success: function(data) {
+          response($.map(data.games, function(g) {
+              return {label: g.title, value: g.package}
+            }));
+        },
+      });
+    },
+    select: function(event, ui) {
+      event.preventDefault()
+      $("#search-box").val(ui.item.label)
+      $("#package-name").val(ui.item.value)
+      $("#search-submit").attr('disabled', false);
+    }
+  });
+
+  $('body').on('click', 'a.permission_link', function(e) {
+    var self = $(this);
+    console.log(self);
+    e.preventDefault();
+    showLoader();
+    $("#permission-title").text(self.text());
+    $("#sentences-table").empty();
+    $.ajax({
+      url: "/extract",
+      data: {privacy_url: self.attr('privacy_url'), permission: self.text()},
+      dataType: "json",
+      type: "POST",
+      success: function(data) {
+        hideLoader();
+        console.log(data.description)
+        if (data.description !== null)
+          $("#permission-description").text(data.description);
+        for (var i = 0; i < data.sentences.length; i++) {
+          $("#sentences-table")
+            .append($("<tr>")
+              .append($("<td>")
+                .text(data.sentences[i])));
+        }
+      }
+    });
+  });
+
+  function showLoader() {
+    $(".loader").show();
+  }
+
+  function hideLoader() {
+    $(".loader").hide();
+  }
+
+  $("#search-form").submit(function(event) {
+    event.preventDefault();
+    showLoader();
+    $.ajax({
+      url: "/playstore-search",
+      data: { "package": $("#package-name").val() },
+      dataType: "json",
+      type: "POST",
+      success: function(data) {
+        hideLoader();
+        console.log(data)
+        $("#permissions-table").empty();
+        for (var i = 0; i < data.permissions.length; i++) {
+          $("#permissions-table")
+            .append($("<tr>")
+              .append($("<td>")
+                .append($("<a>").attr('href', '#').attr('privacy_url', data.privacy_url).addClass('permission_link')
+                .addClass(data.permissions[i].privacy_related ? 'enabled' : 'disabled')
+                  .text(data.permissions[i].name)
+                )
+              )
+            );
+          }
+        $("#privacy-frame").attr('src', data.privacy_url);
+        $("#privacy-frame").attr('hidden', false);
+        setTimeout(function() {
+          $("#privacy-frame").height($("#privacy-frame").contents().find("html").height());
+        }, 2000)
+      },
+    });
+  });

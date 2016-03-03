@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    == bootstrap_assets
+    title Android Privacy Companion
+    meta charset="utf-8"
+      link rel="stylesheet" href="stylesheets/main.css"
+    link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"
+    script src="http://code.jquery.com/jquery-1.9.1.js"
+    script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"
+      
+  body
+    .container
+      header
+        h1.text-center
+         | Android Privacy Companion
+      
+      == yield
+      
+      / footer
+      /   small
+      /     | Copyright #{Time.now.year} Gabriele Petronella
